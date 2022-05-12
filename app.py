@@ -22,7 +22,9 @@ def smsreminder():
             or message_body == 'Stop'\
             or message_body == 'Unsubscribe'\
             or message_body == 'GO'\
-            or message_body == 'STOP ':
+            or message_body == 'STOP ' \
+            or message_body == 'stop ' \
+            or message_body == 'Stop ':
         print('patient has unsubscribed')
 
     elif message_body == 'START' or message_body == 'start' or message_body == 'Start':
@@ -32,24 +34,27 @@ def smsreminder():
         print('response emailed')
         comm = sendEmail()
         comm.prepEmail(message_body, request.form['From']) #todo send phone number and name , maybe just send whole request
-        resp.message('The OnSpot Team has been contacted and will be in contact with your shortly.')
+        resp.message('The OnSpot Team has been contacted and will be in contact with you shortly.')
 
     return str(resp)
 
 
 @app.route('/smsreview', methods=['GET', 'POST'])
 def smsreview():
-    resp = None
+    resp = MessagingResponse()
     message_body = request.form['Body']
+    print(request.form)
     try:
-        if int(message_body) < 7:
+        if int(message_body) < 4:
             resp.message('Please let us know how we can be of greater help.')
         elif int(message_body) > 6:
-            resp.message('Please leave a Google review here: https://g.page/r/CU31ZFkIjXIbEB0/review')
+            resp.message('Thank you for your response, would you please take a moment to review your visit on Google? https://g.page/r/CU31ZFkIjXIbEB0/review')
+        else:
+            resp.message('Thank you for your response.')
     except:
         comm = sendEmail()
         resp.message('Your response has been recorded.')
-        comm.prepEmail(message_body) #todo send phone number and name , maybe just send whole request
+        comm.prepEmail(message_body, request.form['From']) #todo send phone number and name , maybe just send whole request
 
     return str(resp)
 
