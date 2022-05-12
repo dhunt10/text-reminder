@@ -9,7 +9,7 @@ class sendEmail:
         self.sender_email = 'dhunt10@gmail.com'
         #self.receiver_email = 'darin@onspotdermatology.com'
         self.receiver_email = 'dhunt10@gmail.com'
-        self.password = 'Familyguy10!'
+        self.password = ******
         self.smtp_server = 'smtp.gmail.com'
         self.message = MIMEMultipart("alternative")
         self.message["From"] = self.sender_email
